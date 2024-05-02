@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>Writer Forum</title>
+  </head>
+  <body class="w-11/12 m-auto">
+    <!-- Nav section -->
+    <nav>
+      <!-- Nav section -->
+
+      <div class="flex items-center mt-8">
+        <!-- Nab title -->
+
+        <div class="navtitle text-4xl font-bold">
+          <p>ReTro</p>
+        </div>
+        <!--///////////////////////////   Nav links -->
+
+        <div class="flex justify-end grow gap-5 items-center">
+          <div class="">
+            <ul class="flex gap-3">
+              <li
+                class="bg-gray-400 py-2 px-3 text-white rounded-full tooltip"
+                data-tip="Home"
+              >
+                <a href=""><i class="fa-solid fa-house"></i></a>
+              </li>
+              <li
+                class="bg-gray-400 py-2 px-3 text-white rounded-full tooltip"
+                data-tip="Post"
+              >
+                <a href=""><i class="fa-solid fa-pen"></i></a>
+              </li>
+              <li
+                class="bg-gray-400 py-2 px-3 text-white rounded-full tooltip"
+                data-tip="Users"
+              >
+                <a href=""><i class="fa-regular fa-user"></i></a>
+              </li>
+              <li
+                class="bg-gray-400 py-2 px-3 text-white rounded-full tooltip"
+                data-tip="Community"
+              >
+                <a href=""><i class="fa-regular fa-flag"></i></a>
+              </li>
+            </ul>
+          </div>
+
+          <!--/////////////////////////// Login button -->
+
+          <div class="">
+            <button
+              class="bg-gradient-to-r from-cyan-500 to-blue-500 py-2 px-6 rounded-3xl text-white"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- nav Section end -->
+
+    <!-- Banner section start -->
+    <section
+      style="background-image: url(images/bgbanner.png)"
+      class="w-full bg-slate-900 mt-10 rounded-xl bg-no-repeat bg-cover flex flex-wrap justify-around items-center py-14"
+    >
+      <div class="bannerTitle px-5">
+        <p class="text-6xl text-white font-extrabold">Welcome to the</p>
+        <p class="text-6xl font-extrabold text-white">
+          <span class="text-6xl text-blue-600 font-extrabold">ReTro</span>
+          Forum
+        </p>
+        <p class="text-white text-xl mt-5">
+          Share your favorite opinion and win and wp forum coffee mug!
+        </p>
+
+        <label
+          class="w-3/4 input input-bordered flex items-center gap-2 rounded-3xl py-6 mt-5"
+        >
+          <input
+            id="searchText"
+            type="text"
+            class="grow"
+            placeholder="Search here anything"
+          />
+          <span
+            onclick="fetchComments()"
+            class="badge badge-info py-4 px-4 text-white font-bold"
+            >Search</span
+          >
+        </label>
+      </div>
+      <div class="banner-rec bg-white m-10 p-10 rounded-lg">
+        <div class="overflow-x-auto">
+          <table class="table">
+            <!-- head -->
+            <tbody class="text-lg">
+              <!-- row 1 -->
+              <tr>
+                <th>Registered Users</th>
+                <td id="registerUserCount">01</td>
+              </tr>
+              <tr>
+                <th>Forum</th>
+                <td id="forumCount">05</td>
+              </tr>
+              <tr>
+                <th>Topics</th>
+                <td id="topicCount">01</td>
+              </tr>
+              <tr>
+                <th>Replies</th>
+                <td id="repliecCount">01</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- Banner section end -->
+
+    <!-- Modals start-->
+    <div
+      id="spinner"
+      class="w-11/12 h-screen z-10 bg-gray-100 absolute flex justify-center items-center hidden"
+    >
+      <span onclick="load()" class="loading loading-spinner loading-lg"></span>
+    </div>
+    <!-- Modals End -->
+
+    <!-- Discuss section start -->
+    <section class="mt-10">
+      <div id="markedReadDisplay" class="">
+        <div class="dis-header text-center w-1/2 m-auto">
+          <div class="title text-4xl font-extrabold">
+            <p>Let’s Discuss</p>
+          </div>
+          <div class="sub-title mt-5">
+            <p>
+              Yes, you can run unit tests and view the results directly within
+              the app. The integrated testing features allow for a streamlined .
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Discuss card -->
+    <section>
+      <div class="mt-10 py-10 flex flex-wrap gap-10">
+        <!-- user card container -->
+        <div id="commentsDisplay" class="grow"></div>
+
+        <!-- User card -->
+
+        <!-- Title card -->
+        <div class="" style="width: 500px">
+          <div class="bg-gray-200 rounded-xl py-3">
+            <div class="flex justify-between p-5 rounded-xl">
+              <div class="font-bold">
+                <p>Title</p>
+              </div>
+              <div class="flex">
+                <img onclick="togglePost()" src="images/Frame.svg" alt="" />
+                <p>Mark as read (<span id="markedCount">0</span>)</p>
+              </div>
+            </div>
+
+            <!-- Post card -->
+            <div id="markReadDisplay" class="titleReadContainer"></div>
+            <!-- Post card -->
+
+            <!--  -->
+          </div>
+        </div>
+        <!-- Title card -->
+      </div>
+    </section>
+    <!-- Discuss section end -->
+
+    <!-- Forum section start -->
+    <section class="bg-slate-600 rounded-xl">
+      <div
+        class="forum flex justify-evenly items-center py-8 flex-wrap w-10/12 m-auto"
+      >
+        <!-- Forum part-1 -->
+        <div class="bannerTitle mx-5 grow" style="width: 500px">
+          <p class="text-6xl text-white font-extrabold">Welcome to the</p>
+          <p class="text-white text-xl mt-5 w-full">
+            Share your favorite opinion and win and wp forum coffee mug! Yes,
+            you can run unit tests and view the results directly within the app.
+          </p>
+          <button
+            class="bg-gradient-to-r from-cyan-500 to-blue-500 py-2 px-6 rounded-3xl text-white mt-5"
+          >
+            Register
+          </button>
+        </div>
+
+        <div class="">
+          <img src="images/joinforum.png" alt="" />
+        </div>
+      </div>
+    </section>
+    <!-- Forum section end -   -->
+
+    <!-- Latest post  -->
+    <section class="mt-10">
+      <div class="dis-header text-center w-11/12 m-auto">
+        <div class="title text-4xl font-extrabold">
+          <p>Latest Posts</p>
+        </div>
+        <div class="sub-title mt-5 w-8/12 m-auto">
+          <p>
+            Yes, you can run unit tests and view the results directly within the
+            app. The integrated testing features allow for a streamlined .
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest post card -->
+
+    <section>
+      <div
+        id="latestPost-container"
+        class="post-card flex flex-wrap gap-5 w-full justify-center rounded-lg my-10"
+      ></div>
+    </section>
+
+    <!-- Latest post End -->
+
+    <!-- Footer -->
+    <footer>
+      <div class="w-full m-auto text-center bg-gray-300 py-14">
+        <p class="text-2xl font-bold">ReTro</p>
+        <p class="w-1/2 m-auto mt-3">
+          Contrary to popular belief, Lorem Ipsum is not simply random text. It
+          has roots in a piece of classical Latin literature from 45 BC
+        </p>
+        <div class="border-b py-5 text-4xl">
+          <ul class="flex gap-4 justify-center">
+            <li>
+              <a href=""><i class="fa-brands fa-twitter"></i></a>
+            </li>
+            <li>
+              <a href=""><i class="fa-brands fa-facebook"></i></a>
+            </li>
+            <li>
+              <a href=""><i class="fa-brands fa-instagram"></i></a>
+            </li>
+            <li>
+              <a href=""><i class="fa-brands fa-github"></i></a>
+            </li>
+          </ul>
+        </div>
+        <p class="mt-10">2017, All Rights Reserved.</p>
+      </div>
+    </footer>
+    <!-- Footer -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
